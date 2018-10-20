@@ -1,0 +1,18 @@
+You can use this plugin to select an image on the device (see usage on the README.md):
+
+https://github.com/jamesmontemagno/MediaPlugin
+
+The file is type MediaFile.
+
+Then, install Microsoft.Net.Http from Nuget to your PCL and platform projects. You can do the upload like this:
+
+private MediaFile _image;
+
+// code here to assign image to _image
+
+var content = new MultipartFormDataContent();
+content.Add(new StreamContent(_image.GetStream()), "\"file\"", $"\"{_image.Path}\"");
+
+var httpClient = new System.Net.Http.HttpClient();
+var url = "http://upload.here.io/folder/subdir";
+var responseMsg = await httpClient.PostAsync(url, content);
